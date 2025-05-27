@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>チェックボックス</h1>
+<!-- templates/supplies/select_items.html -->
+<form method="POST" action="{% url 'process_selected_items' %}">
+    {% csrf_token %}
+    <<div class="item-list">
+        <div class="item">
+            <input type="checkbox" name="selected_items" value="1" id="item_1">
+            <label for="item_1">商品1</label>
+        </div>
+
+        <div class="item">
+            <input type="checkbox" name="selected_items" value="2" id="item_2">
+            <label for="item_2">商品2</label>
+        </div>
+
+        <div class="item">
+            <input type="checkbox" name="selected_items" value="3" id="item_3">
+            <label for="item_3">商品3</label>
+        </div>
+
+        <div class="item">
+            <input type="checkbox" name="selected_items" value="4" id="item_4">
+            <label for="item_4">商品4</label>
+        </div>
+    </div>
+    <button type="submit">選択した商品を処理</button>
+  </form>
+{% endblock %}

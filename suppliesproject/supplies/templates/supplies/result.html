@@ -1,0 +1,40 @@
+<!-- templates/supplies/result.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>選択された商品</h2>
+    <p>選択された商品数: {{ selected_count }}個</p>
+
+    <div class="row">
+        {% for item in selected_items %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                {% if item.thumbnail %}
+                <img src="{{ item.thumbnail.url }}" class="card-img-top" alt="{{ item.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <div class="card-text">
+                        <small class="text-muted">
+                            カテゴリー: {{ item.get_category_display }}
+                        </small>
+                    </div>
+                    <div class="card-text">
+                        <small class="text-muted">
+                            在庫数: {{ item.stock }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'select-items' %}" class="btn btn-primary">商品選択に戻る</a>
+        <a href="{% url 'list-supplies' %}" class="btn btn-secondary">商品一覧に戻る</a>
+    </div>
+</div>
+{% endblock %}

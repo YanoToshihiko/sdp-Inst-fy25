@@ -112,3 +112,26 @@ def index_view(request):
         'supplies/index.html',
         {'object_list': object_list, 'ranking_list': ranking_list, 'page_obj': page_obj},
     )
+
+def select_items(request):
+    # 商品一覧を取得
+    items = Supplies.objects.all()
+    return render(request, 'supplies/select_items.html', {'items': items})
+
+def process_selected_items(request):
+    # チェックボックスで選択された商品IDのリストを取得
+    selected_item_ids = request.POST.getlist('selected_items')
+
+    # 文字列のリストを整数のリストに変換
+    selected_item_ids = [int(item_id) for item_id in selected_item_ids]
+
+    # 選択された商品を取得
+    selected_items = Supplies.objects.filter(id__in=selected_item_ids)
+
+    return render(request, 'supplies/result.html', {
+        'selected_items': selected_items,
+        'selected_count': len(selected_item_ids)
+    })
+
+def checkbox_view(request):
+    return render(request, 'supplies/checkbox.html')
