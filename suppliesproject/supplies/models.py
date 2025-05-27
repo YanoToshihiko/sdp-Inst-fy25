@@ -25,6 +25,9 @@ class Supplies(models.Model):
         choices = CATEGORY
     )
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    stock = models.IntegerField(default=0)
+    total_stock = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.title
