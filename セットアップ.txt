@@ -1,0 +1,8 @@
+管理者権限のユーザーを作成
+```python
+python manage.py createsuperuser
+```
+
+ユーザID　yano
+PW 1234
+
