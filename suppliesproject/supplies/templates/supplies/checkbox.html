@@ -5,7 +5,7 @@
 <!-- templates/supplies/select_items.html -->
 <form method="POST" action="{% url 'process_selected_items' %}">
     {% csrf_token %}
-    <<div class="item-list">
+    <div class="item-list">
         <div class="item">
             <input type="checkbox" name="selected_items" value="1" id="item_1">
             <label for="item_1">商品1</label>

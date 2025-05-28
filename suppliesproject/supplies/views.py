@@ -125,11 +125,13 @@ def process_selected_items(request):
     # 文字列のリストを整数のリストに変換
     selected_item_ids = [int(item_id) for item_id in selected_item_ids]
 
+    print(selected_item_ids)
+
     # 選択された商品を取得
     selected_items = Supplies.objects.filter(id__in=selected_item_ids)
 
     return render(request, 'supplies/result.html', {
-        'selected_items': selected_items,
+        'selected_item_ids': selected_item_ids,
         'selected_count': len(selected_item_ids)
     })
 
