@@ -9,7 +9,9 @@ urlpatterns = [
     path('supplies/<int:pk>/delete/', views.DeleteSuppliesView.as_view(), name='delete-supplies'),
     path('supplies/<int:supplies_id>/review/', views.CreateReviewView.as_view(), name='create-review'),
     path('', views.index_view, name='index'),
-    path('review/<int:pk>/delete/', views.DeleteReviewView.as_view(), name='delete-review'),  
+    path('review/<int:pk>/delete/', views.DeleteReviewView.as_view(), name='delete-review'),
+    path('search/', views.search_supplies, name='search_supplies'),
+    path('searchview/', views.search_view, name='search_supplies'),
 
 ]
 

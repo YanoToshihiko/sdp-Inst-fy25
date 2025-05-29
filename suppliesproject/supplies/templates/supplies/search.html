@@ -1,0 +1,87 @@
+<!-- templates/search.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>インクリメンタルサーチ</title>
+    <style>
+      .search-container {
+        position: relative;
+        width: 300px;
+      }
+      #searchInput {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      #results {
+        position: absolute;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background: white;
+        border: 1px solid #ddd;
+        border-top: none;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+      }
+      #results li {
+        padding: 8px;
+        cursor: pointer;
+      }
+      #results li:hover {
+        background-color: #f0f0f0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Supplies Search</h1>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="タイトルを入力" />
+      <ul id="results"></ul>
+    </div>
+
+    <script>
+      const input = document.getElementById("searchInput");
+      const resultsList = document.getElementById("results");
+
+      input.addEventListener("input", async () => {
+        const query = input.value;
+        if (query.length === 0) {
+          resultsList.innerHTML = "";
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `/search/?q=${encodeURIComponent(query)}`
+          );
+          if (!response.ok) throw new Error("Network response was not ok");
+          const data = await response.json();
+
+          resultsList.innerHTML = "";
+          data.forEach((supplie) => {
+            const li = document.createElement("li");
+            li.textContent = supplie.title;
+            li.addEventListener("click", () => {
+              input.value = supplie.title;
+              resultsList.innerHTML = "";
+            });
+            resultsList.appendChild(li);
+          });
+        } catch (error) {
+          console.error("Fetch error:", error);
+        }
+      });
+
+      // 検索結果以外をクリックした時に結果を非表示にする
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".search-container")) {
+          resultsList.innerHTML = "";
+        }
+      });
+    </script>
+  </body>
+</html>

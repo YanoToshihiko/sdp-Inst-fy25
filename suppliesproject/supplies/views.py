@@ -15,6 +15,11 @@ from django.db.models import Avg
 from django.core.paginator import Paginator
 from .consts import ITEM_PER_PAGE
 
+# インクリメンタルサーチ機能
+from django.http import JsonResponse
+from .models import Supplies
+from django.views.decorators.http import require_GET
+
 
 # Create your views here.
 class ListSuppliesView(LoginRequiredMixin,ListView):
@@ -112,3 +117,14 @@ def index_view(request):
         'supplies/index.html',
         {'object_list': object_list, 'ranking_list': ranking_list, 'page_obj': page_obj},
     )
+
+# インクリメンタルサーチ機能
+@require_GET
+def search_supplies(request):
+    query = request.GET.get('q', '')
+    results = Supplies.objects.filter(title__icontains=query)[:5]
+    data = [{'id': supplie.id, 'title': supplie.title} for supplie in results]
+    return JsonResponse(data, safe=False)
+
+def search_view(request):
+    return render(request, 'supplies/search.html')
